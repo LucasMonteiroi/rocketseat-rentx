@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.7"
 
 services:
   database_rentx:
@@ -13,7 +13,6 @@ services:
       - POSTGRES_DB=rentx
     volumes:
       - pgdata:/data/postgres
-    
   app:
     build: .
     container_name: rentx
@@ -24,7 +23,7 @@ services:
       - .:/usr/app
     links:
       - database_rentx
-    depends_on:
+    depends_on: 
       - database_rentx
 volumes:
   pgdata:
