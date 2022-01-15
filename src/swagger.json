@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "RentalX Documentation",
+    "title": "RentX Documentation",
     "description": "This is an API Rent",
     "version": "1.0.0",
     "contact": {
@@ -12,25 +12,17 @@
     "/categories": {
       "post": {
         "tags": ["Category"],
-        "summary": "List all categories",
-        "description": "List all categories",
+        "summary": "Create a categories",
+        "description": "Create a categories",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "name": "category name sample",
-                  "description": "Category description sample"
-                }
+                "$ref": "#/definitions/Category"
+              },
+              "example": {
+                "name": "category name sample",
+                "description": "Category description sample"
               }
             }
           }
@@ -73,6 +65,119 @@
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    },
+    "/categories/import": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Import a list of categories",
+        "description": "Import a list of categories",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Category already exists"
+          }
+        }
+      }
+    },
+    "/specifications": {
+      "post": {
+        "tags": ["Specification"],
+        "summary": "Create a specifications",
+        "description": "Create a specifications",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Specification"
+              },
+              "example": {
+                "name": "specification name sample",
+                "description": "Specification description sample"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created"
+        },
+        "500": {
+          "description": "Category already exists"
+        }
+      },
+      "get": {
+        "tags": ["Specification"],
+        "summary": "Get a specification list",
+        "description": "Get a specification list",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Category": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Specification": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
         }
       }
     }
