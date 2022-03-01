@@ -8,10 +8,12 @@ import { routes } from "../../../routes/index.routes";
 import swaggerFile from "../../../swagger.json";
 
 import "@shared/container";
-import "@shared/infra/typeorm";
+import createConnection from "@shared/infra/typeorm";
+
 import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
+createConnection();
 
 app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
